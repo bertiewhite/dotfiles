@@ -16,4 +16,6 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 require("core.lazy-setup")
+require("core.remap")
+
 vim.cmd("colorscheme rose-pine")

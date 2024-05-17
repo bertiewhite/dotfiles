@@ -15,19 +15,27 @@ return { -- Autocompletion
         return 'make install_jsregexp'
       end)(),
     },
-    'saadparwaiz1/cmp_luasnip',
 
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
+    'hrsh7th/cmp-buffer',
 
-    -- If you want to add a bunch of pre-configured snippets,
-    --    you can use this plugin to help you. It even has snippets
-    --    for various frameworks/libraries/etc. but you will have to
-    --    set up the ones that are useful for you.
-    -- 'rafamadriz/friendly-snippets',
+    {
+      "windwp/nvim-autopairs",
+      opts = {
+        fast_wrap = {},
+        disable_filetype = { "TelescopePrompt", "vim" },
+      },
+      config = function(_, opts)
+        require("nvim-autopairs").setup(opts)
+
+        -- setup cmp for autopairs
+        local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+        require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      end,
+    },
+
   },
   config = function()
     -- See `:help cmp`
@@ -46,7 +54,7 @@ return { -- Autocompletion
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
 
-        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<CR>'] = cmp.mapping.confirm { select = true },
 
         ['<C-Space>'] = cmp.mapping.complete {},
 

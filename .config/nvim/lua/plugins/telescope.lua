@@ -29,6 +29,9 @@ return  { -- Fuzzy Finder (files, lsp, etc)
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        file_browser = {
+          hijack_netrw = true,
+        }
       },
       defaults = {
         file_ignore_patterns = {
@@ -75,5 +78,7 @@ return  { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>fn', function()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end, { desc = '[F]uzzyfind [N]eovim files' })
+
+    require("telescope").load_extension("file_browser")
   end,
 }
